@@ -130,7 +130,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
       run: |
-        echo -e "⚠️ immortalwrt-master_Rockchip平台(尝鲜版可能不稳定)，6.1内核\n⁉️ 跟随上游使用nftables，所以精简了很多插件。我也就用smartdns+pw+vlmcsd(pw不好用请尝试更新规则)\nℹ 第一次无法开机请按一下重置按钮\n" >> release.txt
+        echo -e "⚠️ immortalwrt-maste平台(尝鲜版可能不稳定)，6.1内核\n⁉️ 跟随上游使用nftables，所以精简了很多插件。\nℹ 第一次无法开机请按一下重置按钮\n" >> release.txt
         echo "release_tag=$(date +"%Y.%m.%d-Rockchip_master")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
 
