@@ -211,12 +211,18 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
+    - name: 检测内核版本
+      run: |
+        cd openwrt
+        KERNEL_VER=$(make kernelversion 2>/dev/null | head -n 1)
+        echo "KERNEL_VER=$KERNEL_VER" >> $GITHUB_ENV
+
     - name: 生成发布标签
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && steps.compile.outputs.status == 'success' && !cancelled()
       run: |
         VERSION1="${REPO_BRANCH#*-}"
-        echo -e "🎉 X86-64 平台\n✅ ${VERSION1} 源码\n❗️ ip地址 : 192.168.8.1" >> release.txt
+        echo -e "🎉 X86-64 平台\n✅ ${VERSION1} 源码\n🖥 内核版本: ${KERNEL_VER}\n❗️ ip地址 : 192.168.8.1" >> release.txt
         echo "release_tag=$(date +"%Y.%m.%d-${VERSION1}_X86-64")" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
 
